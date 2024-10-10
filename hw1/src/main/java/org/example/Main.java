@@ -18,7 +18,7 @@ public class Main {
         Book1.setAuthor("J. K. Rowling");
         Book1.setYear(1997);
 
-        Book1.print();
+        Book1.display();
 
     }
 

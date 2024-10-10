@@ -1,5 +1,5 @@
 package org.example.task1;
 
 public interface Displayable {
-    public void print();
+    public void display();
 }
