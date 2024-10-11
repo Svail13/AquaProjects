@@ -42,8 +42,10 @@ public class Student implements Printable{
 
     @Override
     public void print() {
+        System.out.println(); //для визуального разделения в консоли
         System.out.println("Student name: " + this.name);
         System.out.println("Student number book: " + this.numberBook);
         System.out.println("Student average score: " + this.averageScore);
+        System.out.println(); //для визуального разделения в консоли
     }
 }

@@ -2,12 +2,12 @@ package org.example;
 
 import org.example.task1_book.Book;
 import org.example.task2_student.Student;
+import org.example.task3_dots.Point;
 
 /*
-Задача "Книга":
-Создайте класс Book с полями для хранения названия, автора и года издания.
-Реализуйте методы для получения и установки этих полей.
-Создайте интерфейс Displayable с методом display(), который реализуется в классе Book для отображения информации о книге.
+Создайте класс Point с приватными полями x и y для координат точки на плоскости.
+Реализуйте методы для получения (get) и установки (set) этих полей.
+Создайте интерфейс Movable с методами moveUp(), moveDown(), moveLeft(), и moveRight() для изменения положения точки
  */
 public class Main {
     public static void main(String[] args) {
@@ -18,16 +18,26 @@ public class Main {
         Book1.setAuthor("J. K. Rowling");
         Book1.setYear(1997);
 
+        System.out.println("Ниже результаты задачи Книга (Task 1):");
         Book1.display();
 //task2
-        Student Student1 = new Student();
-        Student1.setName("Michail Travolta");
-        Student1.setNumberBook(131313);
-        Student1.setAverageScore(8.713);
+        Student student1 = new Student();
+        student1.setName("Michail Travolta");
+        student1.setNumberBook(131313);
+        student1.setAverageScore(8.713);
 
-        Student1.print();
+        System.out.println("Ниже результаты задачи Студенты (Task 2):");
+        student1.print();
 //task3
-        hjkhjk
+        Point point1 = new Point();
+        point1.setX(5);
+        point1.setY(13);
+
+        System.out.println("Ниже результаты задачи Точки (Task 3):");
+        point1.moveLeft();
+        point1.moveRight();
+        point1.moveUp();
+        point1.moveDown();
 
 
 
