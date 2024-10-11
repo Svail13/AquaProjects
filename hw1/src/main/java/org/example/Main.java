@@ -4,12 +4,8 @@ import org.example.task1_book.Book;
 import org.example.task2_student.Student;
 import org.example.task3_dots.Point;
 import org.example.task4_clock.Clock;
+import org.example.task5_car.Car;
 
-/*
-Создайте класс Clock с полями для хранения часов, минут и секунд.
-Реализуйте методы для установки и получения времени, а также метод tick() для увеличения времени на одну секунду.
-Создайте интерфейс Readable с методом readTime(), который выводит текущее время часов.
- */
 public class Main {
     public static void main(String[] args) {
 
@@ -44,7 +40,15 @@ public class Main {
         time1.tick();
         System.out.println("Ниже результаты задачи Часы (Task 4):");
         time1.readTime();
-
+//task5
+        Car car1 = new Car();
+        car1.setProducer("Volvo");
+        car1.setModel("V90 Cross Country");
+        car1.setYear(2021);
+        System.out.println("Ниже результаты задачи Автомобиль (Task 5):");
+        car1.start();
+        car1.stop();
+        car1.drive(10);
 
     }
 
