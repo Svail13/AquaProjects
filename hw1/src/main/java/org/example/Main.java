@@ -20,11 +20,11 @@ public class Main {
 
         Book1.display();
 //task2
-
         Student Student1 = new Student();
         Student1.setName("Michail Travolta");
         Student1.setNumberBook(131313);
         Student1.setAverageScore(8.713);
+
         Student1.print();
 
 
