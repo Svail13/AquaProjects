@@ -26,6 +26,8 @@ public class Main {
         Student1.setAverageScore(8.713);
 
         Student1.print();
+//task3
+        hjkhjk
 
 
 
