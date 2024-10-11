@@ -44,7 +44,6 @@ public class Book implements Displayable {
 
     @Override
     public void display() {
-        System.out.println(); //для визуального разделения в консоли
         System.out.println("Name of the book: " + this.name);
         System.out.println("Author of the book: " + this.author);
         System.out.println("Year of the book: " + this.year);

@@ -30,7 +30,6 @@ public class Point implements Movable {
 
 
     public void moveLeft() {
-        System.out.println(); //для визуального разделения в консоли
         System.out.println("Двигаем точку влево на: " + this.x);
 
     }
