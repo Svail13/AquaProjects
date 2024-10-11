@@ -1,5 +1,5 @@
 package org.example.task2_student;
 
-public interface Displayable {
+public interface Printable {
     public void print();
 }

@@ -6,7 +6,7 @@ package org.example.task2_student;
 Создайте интерфейс Printable с методом print(), аналогично задаче "Банковский счёт", для вывода информации о студенте.
 
 */
-public class Student implements Displayable{
+public class Student implements Printable{
 
     String name;
     int numberBook;
