@@ -17,16 +17,27 @@ public class SimpleTest {
     public void userShouldBeAbleCreateUnicorn(){
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
         // given -> when -> then
-        given()
+
+        //ШАГ 1 - Создание единорога
+        String id = given()
                 .body("{   \"name\": \"Западный Единорог\",\n" +
                         "    \"tail_color\": \"black\"\n" +
                         "}")
                 .contentType(ContentType.JSON)
                 .post("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn")
+        .then()
+                .assertThat()
+                    .statusCode(201)
+                    .body("$", hasKey("_id"))
+        .extract()
+                .path("_id");
+
+        //ШАГ 2 - Удаление единорога после прогона теста
+        given()
+                .delete("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
                 .then()
                 .assertThat()
-                .statusCode(201)
-                .body("$", hasKey("_id"));
+                .statusCode(200);
 
 
     }
@@ -56,15 +67,22 @@ public class SimpleTest {
                 .put("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
         .then()
                 .assertThat()
-                .statusCode(200);
+                    .statusCode(200);
 
         //ШАГ 3 - Получение единорога для проверки цвета в ответе
         given()
                 .get("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
         .then()
                 .assertThat()
-                .statusCode(200)
-                .body("tail_color", equalTo("green"));
+                    .statusCode(200)
+                    .body("tail_color", equalTo("green"));
+
+        //ШАГ 4 - Удаление единорога после прогона теста
+        given()
+                .delete("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
+        .then()
+                .assertThat()
+                    .statusCode(200);
     }
 
     @Test
