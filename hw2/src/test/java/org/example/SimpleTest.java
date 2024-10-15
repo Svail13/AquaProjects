@@ -5,6 +5,7 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.net.ResponseCache;
@@ -14,9 +15,14 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 
 public class SimpleTest {
-    @Test
-    public void userShouldBeAbleCreateUnicorn(){
+    @BeforeAll
+    public static void setupTests() {
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
+        RestAssured.baseURI = "https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b";
+    }
+
+    @Test
+    public void userShouldBeAbleCreateUnicorn() {
         // given -> when -> then
 
         //ШАГ 1 - Создание единорога
@@ -25,7 +31,7 @@ public class SimpleTest {
                         "    \"tail_color\": \"black\"\n" +
                         "}")
                 .contentType(ContentType.JSON)
-                .post("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn")
+                .post("/unicorn")
         .then()
                 .assertThat()
                     .statusCode(HttpStatus.SC_CREATED)
@@ -35,7 +41,7 @@ public class SimpleTest {
 
         //ШАГ 2 - Удаление единорога после прогона теста
         given()
-                .delete("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
+                .delete("/unicorn/" + id)
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK);
@@ -43,8 +49,7 @@ public class SimpleTest {
 
     }
     @Test
-    public void userCanChangeNailColor(){
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
+    public void userCanChangeNailColor() {
         //ШАГ 1 - Создание единорога
         String id = given()
                 .body("{   \"name\": \"Западный Единорог\",\n" +
@@ -52,7 +57,7 @@ public class SimpleTest {
                         "}")
                 .contentType(ContentType.JSON)
         .when()
-                .post("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn")
+                .post("/unicorn")
         .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_CREATED)
@@ -65,14 +70,14 @@ public class SimpleTest {
                 .body("{\"tail_color\": \"green\"}")
                 .contentType(ContentType.JSON)
         .when()
-                .put("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
+                .put("/unicorn/" + id)
         .then()
                 .assertThat()
                     .statusCode(HttpStatus.SC_OK);
 
         //ШАГ 3 - Получение единорога для проверки цвета в ответе
         given()
-                .get("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
+                .get("/unicorn/" + id)
         .then()
                 .assertThat()
                     .statusCode(HttpStatus.SC_OK)
@@ -80,7 +85,7 @@ public class SimpleTest {
 
         //ШАГ 4 - Удаление единорога после прогона теста
         given()
-                .delete("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
+                .delete("/unicorn/" + id)
         .then()
                 .assertThat()
                     .statusCode(HttpStatus.SC_OK);
@@ -88,7 +93,6 @@ public class SimpleTest {
 
     @Test
     public void userCanDeleteUnicorn() {
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
         //ШАГ 1 - Создание единорога
         String id = given()
                 .body("{   \"name\": \"Западный Единорог\",\n" +
@@ -96,7 +100,7 @@ public class SimpleTest {
                         "}")
                 .contentType(ContentType.JSON)
         .when()
-                .post("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn")
+                .post("/unicorn")
         .then()
                 .assertThat()
                     .statusCode(HttpStatus.SC_CREATED)
@@ -106,14 +110,14 @@ public class SimpleTest {
 
         //ШАГ 2 - Удаление единорога
         given()
-                .delete("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
+                .delete("/unicorn/" + id)
         .then()
                 .assertThat()
                     .statusCode(HttpStatus.SC_OK);
 
         //ШАГ 3 - Проверка удаления единорога
         given()
-                .get("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
+                .get("/unicorn/" + id)
         .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_NOT_FOUND);
