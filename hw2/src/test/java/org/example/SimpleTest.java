@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 
 import java.net.ResponseCache;
@@ -27,7 +28,7 @@ public class SimpleTest {
                 .post("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn")
         .then()
                 .assertThat()
-                    .statusCode(201)
+                    .statusCode(HttpStatus.SC_CREATED)
                     .body("$", hasKey("_id"))
         .extract()
                 .path("_id");
@@ -37,7 +38,7 @@ public class SimpleTest {
                 .delete("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
                 .then()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(HttpStatus.SC_OK);
 
 
     }
@@ -54,7 +55,7 @@ public class SimpleTest {
                 .post("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn")
         .then()
                 .assertThat()
-                .statusCode(201)
+                .statusCode(HttpStatus.SC_CREATED)
                 .body("$", hasKey("_id"))
         .extract()
                 .path("_id");
@@ -67,14 +68,14 @@ public class SimpleTest {
                 .put("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
         .then()
                 .assertThat()
-                    .statusCode(200);
+                    .statusCode(HttpStatus.SC_OK);
 
         //ШАГ 3 - Получение единорога для проверки цвета в ответе
         given()
                 .get("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
         .then()
                 .assertThat()
-                    .statusCode(200)
+                    .statusCode(HttpStatus.SC_OK)
                     .body("tail_color", equalTo("green"));
 
         //ШАГ 4 - Удаление единорога после прогона теста
@@ -82,7 +83,7 @@ public class SimpleTest {
                 .delete("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
         .then()
                 .assertThat()
-                    .statusCode(200);
+                    .statusCode(HttpStatus.SC_OK);
     }
 
     @Test
@@ -98,7 +99,7 @@ public class SimpleTest {
                 .post("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn")
         .then()
                 .assertThat()
-                    .statusCode(201)
+                    .statusCode(HttpStatus.SC_CREATED)
                     .body("$", hasKey("_id"))
                 .extract()
                     .path("_id");
@@ -108,13 +109,13 @@ public class SimpleTest {
                 .delete("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
         .then()
                 .assertThat()
-                    .statusCode(200);
+                    .statusCode(HttpStatus.SC_OK);
 
         //ШАГ 3 - Проверка удаления единорога
         given()
                 .get("https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/" + id)
         .then()
                 .assertThat()
-                .statusCode(404);
+                .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 }
