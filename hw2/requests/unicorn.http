@@ -6,7 +6,13 @@ Content-Type: application/json
 }
 
 ###
-GET https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/670e734ba0a8cd03e818aa4c
+PUT https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/670e7deda0a8cd03e818aa7a
+Content-Type: application/json
+
+{"tail_color": "green"}
+
+###
+GET https://crudcrud.com/api/77ac29231e134a1cbba000a0db30ad1b/unicorn/670e7deda0a8cd03e818aa7a
 Accept: application/json
 
 ###
