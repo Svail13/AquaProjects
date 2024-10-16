@@ -4,7 +4,6 @@ package org.example.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
-
 import io.restassured.mapper.ObjectMapperType;
 import org.apache.http.HttpStatus;
 import org.example.api.models.Unicorn;
@@ -35,6 +34,32 @@ public class UnicornRequests {
                          .body("$", hasKey("_id"))
                 .extract().as(Unicorn.class, ObjectMapperType.GSON);
     }
+
+
+    public static void updateTailColorUnicorn(Unicorn unicorn, String tailColor) {
+
+        unicorn.setTailColor(tailColor);
+
+        String unicornJson;
+        try {
+            unicornJson = new ObjectMapper().writeValueAsString(unicorn);
+            System.out.println("Сгенерированный JSON: " + unicornJson); // Логирование JSON
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        given()
+                .body(unicornJson)
+                .contentType(ContentType.JSON)
+                .when()
+                .put("/unicorn/" + unicorn.getId())
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK);
+    }
+
+
+
 
 
 
