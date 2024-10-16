@@ -14,6 +14,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class SimpleTest {
+
     @BeforeAll
     public static void setupTests() {
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
@@ -25,25 +26,27 @@ public class SimpleTest {
         // given -> when -> then
 
         //ШАГ 1 - Создание единорога
-        Unicorn unicorn = new Unicorn("Розовый единорог", "серый");
-        String id = UnicornRequests.createUnicorn(unicorn.toJson());
+
+        Unicorn unicorn = Unicorn.builder().name("Розовый единорог").tailColor("серый").build();
+
+        Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
 
         //ШАГ 2 - Удаление единорога после прогона теста
-        UnicornRequests.deleteUnicorn(id);
+        UnicornRequests.deleteUnicorn(createdUnicorn.getId());
     }
 
     @Test
     public void userCanChangeNailColor() {
         //ШАГ 1 - Создание единорога
-        Unicorn unicorn = new Unicorn("Розовый единорог", "красный");
-        String id = UnicornRequests.createUnicorn(unicorn.toJson());
+        Unicorn unicorn = Unicorn.builder().name("Розовый единорог").tailColor("серый").build();
+        Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
 
         //ШАГ 2 - Обновление цвета хвоста единорога
         given()
                 .body("{\"tail_color\": \"green\"}")
                 .contentType(ContentType.JSON)
                 .when()
-                .put("/unicorn/" + id)
+                .put("/unicorn/" + createdUnicorn.getId())
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK);
@@ -51,27 +54,27 @@ public class SimpleTest {
 
         //ШАГ 3 - Получение единорога для проверки цвета в ответе
         given()
-                .get("/unicorn/" + id)
+                .get("/unicorn/" + createdUnicorn.getId())
         .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK)
                 .body("tail_color", equalTo("green"));
 
         //ШАГ 4 - Удаление единорога после прогона теста
-        UnicornRequests.deleteUnicorn(id);
+        UnicornRequests.deleteUnicorn(createdUnicorn.getId());
     }
 
     @Test
     public void userCanDeleteUnicorn() {
         //ШАГ 1 - Создание единорога
-        String id = UnicornRequests.createUnicorn("{   \"name\": \"Западный Единорог\",\n" + "    \"tail_color\": \"black\"\n" + "}");
-
+        Unicorn unicorn = new Unicorn("Розовый единорог", "красный");
+        Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
         //ШАГ 2 - Удаление единорога
-        UnicornRequests.deleteUnicorn(id);
+        UnicornRequests.deleteUnicorn(createdUnicorn.getId());
 
         //ШАГ 3 - Проверка удаления единорога
         given()
-                .get("/unicorn/" + id)
+                .get("/unicorn/" + createdUnicorn.getId())
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_NOT_FOUND);
