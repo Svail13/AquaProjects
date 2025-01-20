@@ -67,7 +67,7 @@ public class SimpleTest {
     @Test
     public void userCanDeleteUnicorn() {
         //ШАГ 1 - Создание единорога
-        Unicorn unicorn = new Unicorn("Розовый единорог", "красный");
+        Unicorn unicorn = Unicorn.builder().name("Розовый единорог").tailColor("серый").build();
         Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
         //ШАГ 2 - Удаление единорога
         UnicornRequests.deleteUnicorn(createdUnicorn.getId());
