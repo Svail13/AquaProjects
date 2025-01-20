@@ -18,7 +18,7 @@ public class SimpleTest {
     @BeforeAll
     public static void setupTests() {
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
-        RestAssured.baseURI = "https://crudcrud.com/api/7f29056062c044478ea80d73f8e323d7";
+        RestAssured.baseURI = "https://crudcrud.com/api/95d3504f1687487d817355610be90cbc";
     }
 
     @Test
@@ -28,7 +28,6 @@ public class SimpleTest {
         //ШАГ 1 - Создание единорога
 
         Unicorn unicorn = Unicorn.builder().name("Розовый единорог").tailColor("серый").build();
-
         Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
 
         //ШАГ 2 - Удаление единорога после прогона теста
@@ -36,21 +35,15 @@ public class SimpleTest {
     }
 
     @Test
-    public void userCanChangeNailColor() {
+    public void userCanChangeTailColor() {
         //ШАГ 1 - Создание единорога
-        Unicorn unicorn = Unicorn.builder().name("Розовый единорог").tailColor("серый").build();
+        Unicorn unicorn = Unicorn.builder()
+                .name("Розовый единорог")
+                .tailColor("серый").build();
         Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
 
         //ШАГ 2 - Обновление цвета хвоста единорога
-        given()
-                .body("{\"tail_color\": \"green\"}")
-                .contentType(ContentType.JSON)
-                .when()
-                .put("/unicorn/" + createdUnicorn.getId())
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK);
-
+        UnicornRequests.updateTailColorUnicorn(createdUnicorn,"зеленый");
 
         //ШАГ 3 - Получение единорога для проверки цвета в ответе
         given()
@@ -58,7 +51,7 @@ public class SimpleTest {
         .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK)
-                .body("tail_color", equalTo("green"));
+                .body("tailColor", equalTo("зеленый"));
 
         //ШАГ 4 - Удаление единорога после прогона теста
         UnicornRequests.deleteUnicorn(createdUnicorn.getId());
@@ -69,6 +62,7 @@ public class SimpleTest {
         //ШАГ 1 - Создание единорога
         Unicorn unicorn = Unicorn.builder().name("Розовый единорог").tailColor("серый").build();
         Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
+
         //ШАГ 2 - Удаление единорога
         UnicornRequests.deleteUnicorn(createdUnicorn.getId());
 
