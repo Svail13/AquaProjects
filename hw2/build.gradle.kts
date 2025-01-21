@@ -21,6 +21,7 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok:1.18.28")
 
     implementation("com.codeborne:selenide:7.7.0")
+    implementation("org.slf4j:slf4j-simple:2.0.9")
 }
 
 tasks.test {
