@@ -20,6 +20,7 @@ dependencies {
     testCompileOnly("org.projectlombok:lombok:1.18.28")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.28")
 
+    implementation("com.codeborne:selenide:7.7.0")
 }
 
 tasks.test {
